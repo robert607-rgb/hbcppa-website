@@ -23,7 +23,7 @@ Crest received directly from user. Preserved as supplied, with original proporti
 
 Design read: heritage association website for Hampshire bowlers, with a clear, welcoming style led by the navy, gold and red heraldic crest. Native CSS editorial aesthetic, not an official design system. Existing static framework preserved. Georgia is justified by the crest’s heraldic serif lettering and heritage subject. Body uses the Windows system sans family.
 
-Taste dials: DESIGN_VARIANCE 5, MOTION_INTENSITY 2, VISUAL_DENSITY 4. Asymmetric split crest hero, concise homepage, dedicated content pages, familiar navigation, no scroll animation. Light and dark semantic colours follow user system preference. Four-pixel corner scale for controls/panels and naturally round crest identity.
+Taste dials: DESIGN_VARIANCE 6, MOTION_INTENSITY 2, VISUAL_DENSITY 4. Asymmetric split crest hero, concise homepage, dedicated content pages, familiar navigation, no scroll animation. The user requested stronger use of the supplied badge colours. The revised, consistent dark theme uses royal navy throughout, burgundy news and membership panels, and warm gold headings, buttons and details. This deliberately uses the established three-colour emblem palette rather than a generic single-accent theme. Four-pixel corner scale for controls/panels and naturally round crest identity.
 
 ## Current-site audit
 
