@@ -19,7 +19,7 @@ The `public` folder contains the complete site and its documents. Old HugoFox pa
 
 Edit the relevant `public/<page>/index.html` file, or `public/index.html` for the home page. Shared styles and the navigation script are in `public/assets`. Commit the changes to `main`. No build step is required.
 
-The `source` folder records research and content checks. It is not deployed. The original supplied crest is preserved as `public/assets/crest.png`; a smaller WebP copy is used for display. The bowls still life is an illustrative AI-generated image, not a photograph of an association venue or members. It was created with the built-in image generation tool using the prompt recorded in `source/RESEARCH.md`.
+The `source` folder records research and content checks. It is not deployed. The original supplied crest is preserved as `public/assets/crest-1953.jpg`; a smaller WebP copy is used for display. The bowls still life is an illustrative AI-generated image, not a photograph of an association venue or members. It was created with the built-in image generation tool using the prompt recorded in `source/RESEARCH.md`.
 
 ## Before switching the association domain
 
@@ -27,7 +27,7 @@ The current `hbcppa.org` domain remains with its existing provider. Connecting t
 
 ## Content points to confirm
 
-- Supplied crest says 1955. Published association history and 75th anniversary notice say 1953. Crest is preserved; copy follows the published history.
+- The user supplied the corrected crest showing 1953 on 1 October 2026. It matches the published association history and anniversary notice.
 - Officers and contact details follow the association’s 2026 website.
 - Existing membership leaflet advertises £7 per year. The site asks applicants to confirm the current subscription before paying.
 - Presidents Day on 9 September 2026 is archived as a past event.

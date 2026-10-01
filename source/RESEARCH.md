@@ -19,7 +19,7 @@ Cross-reference: https://www.hampshireiba.com/community/hampshire-indoor-bowls-a
 
 ## Supplied identity
 
-Crest received directly from user. Preserved as supplied, with original proportions and details. It says 1955; published history and anniversary maths say 1953. The site records the disagreement rather than silently changing the crest.
+The user supplied a replacement crest on 1 October 2026 showing the correct founding year, 1953. The supplied JPEG is preserved unchanged as crest-1953.jpg, with a WebP display copy. The former date-discrepancy notice has been removed; the crest now agrees with the published history.
 
 Design read: heritage association website for Hampshire bowlers, with a clear, welcoming style led by the navy, gold and red heraldic crest. Native CSS editorial aesthetic, not an official design system. Existing static framework preserved. Georgia is justified by the crest’s heraldic serif lettering and heritage subject. Body uses the Windows system sans family.
 
