@@ -31,6 +31,7 @@ The current `hbcppa.org` domain remains with its existing provider. Connecting t
 - Officers and contact details follow the association’s 2026 website.
 - Existing membership leaflet advertises £7 per year. The site asks applicants to confirm the current subscription before paying.
 - Presidents Day on 9 September 2026 is archived as a past event.
-- No public current fixtures or separately verified member honours were available. The site directs match enquiries to the joint match secretaries.
+- The fixtures page includes all six indoor friendlies published on the association’s existing fixture page, checked 7 October 2026: three in late 2026 and three in early 2027. Dates, opponents, venues, times, formats, dress codes and the Riverside lunch note are preserved. No results are published yet. The old friendly-fixtures paths redirect to `/fixtures/`.
+- No separately verified member honours were available. Match enquiries go to the joint match secretaries.
 
 See `source/VALIDATION.md` for the completed checks.
