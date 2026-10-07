@@ -1,0 +1,14 @@
+{
+  "fixtures": [
+    {"id":"palmerston-2026-10-18","date":"2026-10-18","opponent":"Palmerston","venue":"Fareham","time":"14:15","rinks":"6 Mixed Triples","dress":"Greys","note":"","result":"","type":"Indoor"},
+    {"id":"banister-2026-11-22","date":"2026-11-22","opponent":"Banister Park","venue":"Southampton","time":"14:00","rinks":"6 Mixed Rinks","dress":"Whites","note":"","result":"","type":"Indoor"},
+    {"id":"atherley-2026-12-06","date":"2026-12-06","opponent":"Atherley","venue":"Southampton","time":"14:00","rinks":"6 Mixed Triples","dress":"Whites","note":"","result":"","type":"Indoor"},
+    {"id":"victory-2027-01-06","date":"2027-01-06","opponent":"Victory","venue":"Portsmouth","time":"14:15","rinks":"6 Mixed Rinks","dress":"Greys","note":"","result":"","type":"Indoor"},
+    {"id":"chawton-2027-02-14","date":"2027-02-14","opponent":"Chawton Park","venue":"Alton","time":"14:15","rinks":"6 Mixed Triples","dress":"Greys","note":"","result":"","type":"Indoor"},
+    {"id":"riverside-2027-03-21","date":"2027-03-21","opponent":"Riverside","venue":"Winchester","time":"10:30","rinks":"6 Mixed Rinks","dress":"Greys","note":"Followed by lunch.","result":"","type":"Indoor"}
+  ],
+  "news": [
+    {"id":"anniversary-2028","title":"Celebrating 75 years","body":"The association’s published anniversary notice looks ahead to 75 years in 2028. A few special matches are being considered to celebrate.\n\nDates, opponents and venues have not yet been announced. Further details will be added when confirmed by the association.","date":"","status":"published","image":"","imageAlt":"","kind":"anniversary"},
+    {"id":"presidents-day","title":"Presidents Day 2026","body":"The association advertised Presidents Day for 9 September 2026 at Fleming Park Bowls Club, Eastleigh, SO50 9NL.\n\nMembers and guests were invited. This date has now passed. For information about future social events, contact the Honorary Secretary.","date":"","status":"published","image":"","imageAlt":"","kind":"archive"}
+  ]
+}
