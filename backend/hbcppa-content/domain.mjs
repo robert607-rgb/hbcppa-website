@@ -22,6 +22,13 @@ export function validateItems(kind, input, projectUrl) {
     const id = text(item.id, 'record ID', 80, true);
     if (!/^[a-zA-Z0-9_-]+$/.test(id) || ids.has(id)) throw new ApiError(400, 'Duplicate or invalid record ID.');
     ids.add(id);
+    if (kind === 'officers') {
+      if (!['officer', 'committee'].includes(item.group)) throw new ApiError(400, 'Choose officers or committee.');
+      if (!Number.isInteger(item.order) || item.order < 0 || item.order > 999) throw new ApiError(400, 'Enter a display order from 0 to 999.');
+      return {id, group: item.group, order: item.order,
+        name: text(item.name, 'name', 160, true), role: text(item.role ?? '', 'role', 160, item.group === 'officer'),
+        club: text(item.club ?? '', 'club', 160)};
+    }
     if (kind === 'fixtures') {
       const date = validDate(item.date);
       const time = text(item.time, 'start time', 5, true);

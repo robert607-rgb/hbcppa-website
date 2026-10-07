@@ -1,6 +1,6 @@
-import {request, renderFixtures, renderNews, el, dateLabel} from './content.mjs';
+import {request, renderFixtures, renderNews, renderOfficers, el, dateLabel} from './content.mjs';
 const $ = id => document.getElementById(id);
-const fixtureForm = $('fixture-form'), newsForm = $('news-form');
+const fixtureForm = $('fixture-form'), newsForm = $('news-form'), officerForm = $('officer-form');
 let token = '', state = null, dirty = false, saving = false;
 try {token = sessionStorage.getItem('hbcppa-admin-session') || '';} catch {}
 const formValue = (form, name) => form.elements.namedItem(name).value;
@@ -43,6 +43,17 @@ function newsFromForm() {
     date: formValue(newsForm, 'date'), status: formValue(newsForm, 'status'), image: formValue(newsForm, 'image'),
     imageAlt: formValue(newsForm, 'imageAlt').trim(), kind: formValue(newsForm, 'kind') || 'standard'};
 }
+function officerFromForm() {
+  return {id: formValue(officerForm, 'id') || crypto.randomUUID(), name: formValue(officerForm, 'name').trim(),
+    group: formValue(officerForm, 'group'), role: formValue(officerForm, 'role').trim(),
+    club: formValue(officerForm, 'club').trim(), order: Number(formValue(officerForm, 'order'))};
+}
+function previewOfficer() {
+  const item = officerFromForm();
+  officerForm.elements.namedItem('role').required = item.group === 'officer';
+  if (item.name) renderOfficers([item], $('officer-preview'));
+  else $('officer-preview').replaceChildren(el('p', {class: 'small'}, 'Enter a name to preview this entry.'));
+}
 function previewFixture() {
   const item = fixtureFromForm();
   if (item.date && item.time && item.opponent) renderFixtures([item], $('fixture-preview'));
@@ -74,6 +85,16 @@ function openNews(item) {
   $('remove-photo').hidden = !value.image;
   dirty = false; previewNews(); renderLists();
 }
+function openOfficer(item) {
+  const group = formValue(officerForm, 'group') || 'officer';
+  const nextOrder = state ? Math.max(0, ...state.officers.filter(o => o.group === group).map(o => o.order)) + 1 : 1;
+  const value = item || {id:'',group,name:'',role:'',club:'',order:Math.min(nextOrder,999)};
+  officerForm.reset();
+  for (const [key,v] of Object.entries(value)) setValue(officerForm,key,v);
+  $('officer-editor-title').textContent = item ? 'Edit officer or committee member' : 'Add officer or committee member';
+  $('delete-officer').hidden = !item;
+  dirty = false; previewOfficer(); renderLists();
+}
 function renderLists() {
   if (!state) return;
   $('fixture-list').replaceChildren();
@@ -92,13 +113,25 @@ function renderLists() {
     $('news-list').append(button);
   }
   if(!state.news.length) $('news-list').append(el('p',{class:'small'},'No news stories yet.'));
+  $('officer-list').replaceChildren();
+  for (const group of ['officer','committee']) {
+    const items = state.officers.filter(o => o.group === group).sort((a,b) => a.order - b.order || a.name.localeCompare(b.name));
+    if (items.length) $('officer-list').append(el('h3', {class:'officer-list-heading'}, group === 'officer' ? 'Officers' : 'Committee'));
+    for (const item of items) {
+      const button = el('button',{type:'button',class:'record-button','aria-pressed':String(formValue(officerForm,'id') === item.id)});
+      button.append(el('strong',{},item.name),el('span',{},[item.role,item.club].filter(Boolean).join(' · ')));
+      button.addEventListener('click', () => {if(discardAllowed()) {openOfficer(item); status('');}});
+      $('officer-list').append(button);
+    }
+  }
+  if (!state.officers.length) $('officer-list').append(el('p',{class:'small'},'No officers or committee members yet.'));
 }
 async function load(preserve = false) {
   busy(true);
   try {
     state = await request('admin',{token});
     $('admin-login').hidden = true; $('admin-dashboard').hidden = false;
-    if (!preserve) {openFixture(state.fixtures[0]); openNews(state.news[0]);}
+    if (!preserve) {openFixture(state.fixtures[0]); openNews(state.news[0]); openOfficer(state.officers[0]);}
     renderLists();
     status(preserve ? 'Latest records loaded. Check your form before saving.' : 'Ready to edit. Saved changes appear on the public website.');
   } catch(error) {errorMessage(error); if(!state) signedOut();}
@@ -133,15 +166,31 @@ for(const tab of document.querySelectorAll('[data-editor-tab]')) tab.addEventLis
   for(const button of document.querySelectorAll('[data-editor-tab]')) button.setAttribute('aria-pressed',String(button === tab));
   $('fixtures-panel').hidden = tab.dataset.editorTab !== 'fixtures';
   $('news-panel').hidden = tab.dataset.editorTab !== 'news';
+  $('officers-panel').hidden = tab.dataset.editorTab !== 'officers';
   // Discarding a form restores its stored value before another section is opened.
   const selectedFixture = state.fixtures.find(f => f.id === formValue(fixtureForm,'id'));
   const selectedNews = state.news.find(n => n.id === formValue(newsForm,'id'));
-  openFixture(selectedFixture); openNews(selectedNews); status('');
+  const selectedOfficer = state.officers.find(o => o.id === formValue(officerForm,'id'));
+  openFixture(selectedFixture); openNews(selectedNews); openOfficer(selectedOfficer); status('');
 });
 $('add-fixture').addEventListener('click', () => {if(discardAllowed()) {openFixture(); status(''); fixtureForm.elements.opponent.focus();}});
 $('add-news').addEventListener('click', () => {if(discardAllowed()) {openNews(); status(''); newsForm.elements.title.focus();}});
+$('add-officer').addEventListener('click', () => {if(discardAllowed()) {openOfficer(); status(''); officerForm.elements.namedItem('name').focus();}});
 fixtureForm.addEventListener('input', () => {dirty = true; previewFixture();});
 newsForm.addEventListener('input', () => {dirty = true; previewNews();});
+officerForm.addEventListener('input', () => {dirty = true; previewOfficer();});
+officerForm.addEventListener('submit', async event => {
+  event.preventDefault(); if(saving || !state) return; busy(true); status('Saving officer details…');
+  try {
+    const item = officerFromForm(), records = [...state.officers];
+    const index = records.findIndex(o => o.id === item.id);
+    if (index >= 0) records[index] = item; else records.push(item);
+    const saved = await request('officers',{token,method:'PUT',body:{revision:state.revisions.officers,items:records}});
+    state.officers = saved.items; state.revisions.officers = saved.revision;
+    openOfficer(state.officers.find(o => o.id === item.id));
+    status('Officer details saved. The public officers and committee page is updated.');
+  } catch(error) {errorMessage(error);} finally {busy(false);}
+});
 fixtureForm.addEventListener('submit', async event => {
   event.preventDefault(); if(saving || !state) return; busy(true); status('Saving fixture…');
   try {
@@ -173,19 +222,20 @@ newsForm.addEventListener('submit', async event => {
   } catch(error) {errorMessage(error);} finally {busy(false);}
 });
 async function remove(kind) {
-  const form = kind === 'fixtures' ? fixtureForm : newsForm;
+  const form = kind === 'fixtures' ? fixtureForm : kind === 'officers' ? officerForm : newsForm;
   const id = formValue(form,'id'); if(!id || !state || saving) return;
-  if(!window.confirm(`Remove this ${kind === 'fixtures' ? 'fixture' : 'news story'} from the website?`)) return;
+  if(!window.confirm(`Remove this ${kind === 'fixtures' ? 'fixture' : kind === 'officers' ? 'officer or committee entry' : 'news story'} from the website?`)) return;
   busy(true); status('Removing record…');
   try {
     const saved = await request(kind,{token,method:'PUT',body:{revision:state.revisions[kind],items:state[kind].filter(item => item.id !== id)}});
     state[kind] = saved.items; state.revisions[kind] = saved.revision;
-    kind === 'fixtures' ? openFixture() : openNews();
+    kind === 'fixtures' ? openFixture() : kind === 'officers' ? openOfficer() : openNews();
     status('Record removed. The public website is updated.');
   } catch(error) {errorMessage(error);} finally {busy(false);}
 }
 $('delete-fixture').addEventListener('click', () => remove('fixtures'));
 $('delete-news').addEventListener('click', () => remove('news'));
+$('delete-officer').addEventListener('click', () => remove('officers'));
 $('remove-photo').addEventListener('click', () => {setValue(newsForm,'image',''); setValue(newsForm,'imageAlt',''); newsForm.elements.photo.value=''; $('photo-current').hidden=true; $('remove-photo').hidden=true; dirty=true; previewNews();});
 newsForm.elements.photo.addEventListener('change', () => {dirty = true; const photo=newsForm.elements.photo.files[0]; $('photo-file-status').textContent=photo ? `Selected: ${photo.name}. It will upload when you save.` : '';});
 window.addEventListener('beforeunload', event => {if(dirty) {event.preventDefault(); event.returnValue='';}});

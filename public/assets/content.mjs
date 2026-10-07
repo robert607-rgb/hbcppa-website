@@ -93,6 +93,35 @@ export function renderNews(items, container, preview = false) {
   if (!stories.length) fragment.append(el('p', {}, 'No news stories have been published yet.'));
   container.replaceChildren(fragment);
 }
+export function renderOfficers(items, container) {
+  const fragment = document.createDocumentFragment();
+  const ordered = [...items].sort((a,b) => a.order - b.order || a.name.localeCompare(b.name));
+  const officers = ordered.filter(item => item.group === 'officer');
+  if (officers.length) {
+    const grid = el('div', {class: 'officer-grid'});
+    for (const item of officers) {
+      const article = el('article');
+      article.append(el('p', {class: 'role'}, item.role), el('h2', {}, item.name));
+      if (item.club) article.append(el('p', {}, item.club));
+      grid.append(article);
+    }
+    fragment.append(grid);
+  }
+  const members = ordered.filter(item => item.group === 'committee');
+  if (members.length) {
+    const section = el('div', {class: 'committee-section'});
+    section.append(el('h2', {}, 'Committee'));
+    const list = el('dl', {class: 'committee'});
+    for (const item of members) {
+      const entry = el('div');
+      entry.append(el('dt', {}, item.name), el('dd', {}, [item.club, item.role].filter(Boolean).join(' | ')));
+      list.append(entry);
+    }
+    section.append(list); fragment.append(section);
+  }
+  if (!items.length) fragment.append(el('p', {}, 'Officer and committee details will be published here when available.'));
+  container.replaceChildren(fragment);
+}
 export async function request(path, {token, method = 'GET', body, raw = false} = {}) {
   const headers = {};
   if (token) headers.Authorization = `Bearer ${token}`;

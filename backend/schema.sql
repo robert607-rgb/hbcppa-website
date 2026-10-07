@@ -1,6 +1,6 @@
 -- Only the HBCPPA API's server credentials may access these records.
 create table if not exists public.hbcppa_content (
-  key text primary key check (key in ('fixtures', 'news')),
+  key text primary key check (key in ('fixtures', 'news', 'officers')),
   value jsonb not null check (jsonb_typeof(value) = 'array'),
   revision bigint not null default 1 check (revision > 0),
   updated_at timestamptz not null default now()

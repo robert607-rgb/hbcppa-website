@@ -1,4 +1,4 @@
-import {request, renderFixtures, renderNews, el, dateLabel} from './content.mjs';
+import {request, renderFixtures, renderNews, renderOfficers, el, dateLabel} from './content.mjs';
 async function refresh() {
   try {
     const data = await request('public');
@@ -9,6 +9,8 @@ async function refresh() {
     }
     const news = document.getElementById('news-stories');
     if (news) renderNews(data.news, news);
+    const officers = document.getElementById('officers-list');
+    if (officers) renderOfficers(data.officers, officers);
     const homeNews = document.getElementById('home-news-items');
     if (homeNews) {
       const newest = [...data.news].sort((a,b) => (b.date || '').localeCompare(a.date || '')).slice(0,3);
@@ -38,7 +40,7 @@ async function refresh() {
     if (status) status.hidden = true;
   } catch {
     const status = document.getElementById('content-status');
-    if (status) {status.hidden = false; status.textContent = 'The latest updates could not be loaded. The saved schedule and news are shown below. Please try again shortly.';}
+    if (status) {status.hidden = false; status.textContent = 'The latest updates could not be loaded. The previously saved page content is shown below. Please try again shortly.';}
   }
 }
 refresh();

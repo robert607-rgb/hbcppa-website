@@ -31,10 +31,12 @@ export function createHandler({url, key, fetcher = fetch}) {
     const rows = await db('hbcppa_content?select=key,value,revision,updated_at');
     const fixtureRow = rows.find(r => r.key === 'fixtures');
     const newsRow = rows.find(r => r.key === 'news');
-    if (!fixtureRow || !newsRow) throw new ApiError(503, 'The editor is being prepared. Please try again shortly.');
+    const officersRow = rows.find(r => r.key === 'officers');
+    if (!fixtureRow || !newsRow || !officersRow) throw new ApiError(503, 'The editor is being prepared. Please try again shortly.');
     return {fixtures: fixtureRow.value, news: admin ? newsRow.value : newsRow.value.filter(n => n.status === 'published'),
-      ...(admin ? {revisions: {fixtures: fixtureRow.revision, news: newsRow.revision}} : {}),
-      updatedAt: fixtureRow.updated_at > newsRow.updated_at ? fixtureRow.updated_at : newsRow.updated_at};
+      officers: officersRow.value,
+      ...(admin ? {revisions: {fixtures: fixtureRow.revision, news: newsRow.revision, officers: officersRow.revision}} : {}),
+      updatedAt: rows.map(row => row.updated_at).filter(Boolean).sort().at(-1)};
   }
   async function session(request) {
     const token = request.headers.get('Authorization')?.replace(/^Bearer /, '') ?? '';
@@ -83,7 +85,7 @@ export function createHandler({url, key, fetcher = fetch}) {
         await db(`hbcppa_admin_sessions?token_hash=eq.${tokenHash}`, 'DELETE');
         return reply({ok: true});
       }
-      if (['fixtures', 'news'].includes(route) && request.method === 'PUT') {
+      if (['fixtures', 'news', 'officers'].includes(route) && request.method === 'PUT') {
         const body = await bodyJson(request);
         if (!Number.isSafeInteger(body.revision) || body.revision < 1) throw new ApiError(400, 'Reload the editor before saving.');
         const items = validateItems(route, body.items, url);

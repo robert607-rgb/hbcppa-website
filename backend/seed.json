@@ -10,5 +10,103 @@
   "news": [
     {"id":"anniversary-2028","title":"Celebrating 75 years","body":"The association’s published anniversary notice looks ahead to 75 years in 2028. A few special matches are being considered to celebrate.\n\nDates, opponents and venues have not yet been announced. Further details will be added when confirmed by the association.","date":"","status":"published","image":"","imageAlt":"","kind":"anniversary"},
     {"id":"presidents-day","title":"Presidents Day 2026","body":"The association advertised Presidents Day for 9 September 2026 at Fleming Park Bowls Club, Eastleigh, SO50 9NL.\n\nMembers and guests were invited. This date has now passed. For information about future social events, contact the Honorary Secretary.","date":"","status":"published","image":"","imageAlt":"","kind":"archive"}
+  ],
+  "officers": [
+      {
+          "id": "president-victor",
+          "group": "officer",
+          "order": 1,
+          "name": "Victor Amaira B.E.M.",
+          "role": "President & Membership Secretary",
+          "club": "Meon Valley B.C."
+      },
+      {
+          "id": "vice-president-geoff",
+          "group": "officer",
+          "order": 2,
+          "name": "Geoff Jessup",
+          "role": "Vice-President",
+          "club": "Banister Park B.C."
+      },
+      {
+          "id": "past-president-wendy",
+          "group": "officer",
+          "order": 3,
+          "name": "Wendy Taylor",
+          "role": "Immediate Past President",
+          "club": "Highcliffe B.C."
+      },
+      {
+          "id": "secretary-peggy",
+          "group": "officer",
+          "order": 4,
+          "name": "Peggy Marshall",
+          "role": "Honorary Secretary",
+          "club": "County B.C."
+      },
+      {
+          "id": "committee-lloyd",
+          "group": "committee",
+          "order": 1,
+          "name": "Lloyd Blackford",
+          "role": "",
+          "club": "Pirrie Park B.C."
+      },
+      {
+          "id": "committee-adrian",
+          "group": "committee",
+          "order": 2,
+          "name": "Adrian Booth",
+          "role": "",
+          "club": "Meon Valley B.C."
+      },
+      {
+          "id": "committee-christine",
+          "group": "committee",
+          "order": 3,
+          "name": "Christine Brett",
+          "role": "",
+          "club": "Meon Valley B.C."
+      },
+      {
+          "id": "committee-hugh",
+          "group": "committee",
+          "order": 4,
+          "name": "Hugh Coulter",
+          "role": "Joint Match Secretary",
+          "club": "County B.C."
+      },
+      {
+          "id": "committee-malcolm",
+          "group": "committee",
+          "order": 5,
+          "name": "Malcolm James",
+          "role": "Joint Match Secretary",
+          "club": "County B.C."
+      },
+      {
+          "id": "committee-peggy",
+          "group": "committee",
+          "order": 6,
+          "name": "Peggy Marshall",
+          "role": "Honorary Secretary",
+          "club": "County B.C."
+      },
+      {
+          "id": "committee-walter",
+          "group": "committee",
+          "order": 7,
+          "name": "Walter Metcalf",
+          "role": "",
+          "club": "Lockswood B.C."
+      },
+      {
+          "id": "committee-tina",
+          "group": "committee",
+          "order": 8,
+          "name": "Tina Stokes",
+          "role": "",
+          "club": "Romsey B.C."
+      }
   ]
 }
