@@ -29,3 +29,24 @@ footer{background:#091b38;border-top:3px solid #8b3042}.footer-top h2{color:#e7c
 @media(max-width:1100px){.hero-crest{max-width:406px}}
 @media(max-width:767px){.hero-crest{max-width:286px;padding:8px}.hero-crest img{max-width:270px}.news-feature .anniversary-mark{border-color:#b49158}.contact-panel{padding:26px}}
 @media print{body{background:white;color:black}.news-feature,.contact-panel,footer{background:white;color:black}.hero-crest{border:0}.news-feature h2,.news-feature p,.news-feature a,.contact-panel p,.contact-panel a{color:black}}
+
+/* Keep association admin visible at the far right, including with the mobile menu closed. */
+.header-inner{gap:18px}
+.header-inner nav{margin-left:auto}
+.header-admin{flex-shrink:0;min-height:42px;padding:8px 14px;font-size:15px}
+.header-admin[aria-current=page]{text-decoration:underline;text-underline-offset:4px}
+@media(max-width:1100px){
+  .header-inner{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:0 12px}
+  .header-inner .brand{grid-column:1;grid-row:1}
+  .header-inner .menu-button{grid-column:2;grid-row:1}
+  .header-inner nav{grid-column:1/-1;grid-row:2;margin-left:0}
+  .header-admin{grid-column:3;grid-row:1}
+}
+@media(max-width:480px){
+  .header-inner .brand{gap:8px}
+  .header-inner .brand img{width:44px;height:44px}
+  .header-inner .brand strong{font-size:18px}
+  .header-inner .brand small{display:none}
+  .header-inner .menu-button{padding:7px 10px}
+  .header-admin{min-height:40px;padding:7px 12px}
+}
